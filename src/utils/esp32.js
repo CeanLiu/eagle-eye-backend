@@ -15,18 +15,18 @@ export async function checkEsp32Status() {
       throw error; // Throw the custom error
     }
   } catch (error) {
-    throw new Error("Failed to check ESP32 status: " + error.message);
+    throw new Error(`Failed to check ESP32 status: ${error.message}`);
   }
 }
 
-export async function getEsp32Data() {
+export async function getEsp32Stream() {
   try {
-    const response = await fetch(`${ESP_URL}/data`);
+    const response = await fetch(`${ESP_URL}/stream`);
     if (!response.ok) {
-      throw new Error("Failed to fetch data from ESP32");
+      throw new Error(`Failed to fetch data from ESP32: ${response.message}`);
     }
     return response;
   } catch (error) {
-    throw error;
+    throw new Error(`Failed to fetch data from ESP32: ${error}`);
   }
 }
