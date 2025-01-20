@@ -1,0 +1,28 @@
+{
+  "name": "eagleeye-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Webserver.js",
+  "scripts": {
+    "devStart": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgl06/eagleeye-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zgl06/eagleeye-backend/issues"
+  },
+  "homepage": "https://github.com/zgl06/eagleeye-backend#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "vjs": "^0.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
