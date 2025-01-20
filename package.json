@@ -18,11 +18,13 @@
   },
   "homepage": "https://github.com/zgl06/eagleeye-backend#readme",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "vjs": "^0.1.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
-  }
+  },
+  "type": "module"
 }
