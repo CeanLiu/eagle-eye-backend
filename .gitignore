@@ -1,3 +1,4 @@
 node_modules
 examples
 .env
+/public/ARDUINO/sketch_jan20a
