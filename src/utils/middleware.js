@@ -3,7 +3,8 @@ import { checkEsp32Status } from "./esp32.js";
 //check if esp is available(i.e. if it is on)
 export async function checkEsp32(req, res, next) {
   try {
-    const isReady = await checkEsp32Status();
+    const isReady = req;
+    console.log(res);
     if (isReady) {
       next();
     }

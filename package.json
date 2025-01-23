@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/zgl06/eagleeye-backend#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.8.1",
     "vjs": "^0.1.8",
     "ws": "^8.18.0"
   },

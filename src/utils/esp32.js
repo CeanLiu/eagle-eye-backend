@@ -19,14 +19,22 @@ export async function checkEsp32Status() {
   }
 }
 
-export async function getEsp32Stream() {
-  try {
-    const response = await fetch(`${ESP_URL}/stream`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data from ESP32: ${response.message}`);
-    }
-    return response;
-  } catch (error) {
-    throw new Error(`Failed to fetch data from ESP32: ${error}`);
-  }
+export function receiveEsp32Stream(req) {
+  return new Promise((resolve, reject) => {
+    let imageData = Buffer.alloc(0);
+    req.on("data", (chunk) => {
+      imageData = Buffer.concat([imageData, chunk]);
+      console.log("Received chunk of size:", chunk.length);
+    });
+
+    req.on("end", () => {
+      console.log("Final image size:", imageData.length, "bytes");
+      resolve(imageData);
+    });
+
+    req.on("error", (err) => {
+      console.error("Error receiving data:", err);
+      reject(err);
+    });
+  });
 }
