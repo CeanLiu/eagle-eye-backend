@@ -10,12 +10,10 @@ export default class Client {
     return this.#type;
   }
   setType(type) {
-    this.#type = ClientTypes[type];
+    this.#type = type;
   }
 
   sendMessage(message) {
-    if (this.ws.readystate === this.ws.OPEN) {
-      this.ws.send(message);
-    }
+    this.ws.send(message);
   }
 }

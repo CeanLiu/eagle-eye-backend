@@ -6,6 +6,7 @@ export default function setupWebSocket(server) {
 
   wss.on("connection", (ws) => {
     handleConnection(ws); // Pass the ws instance to the handler
+    console.log(`client ${ws} joined`);
   });
 
   console.log("WebSocket server is running!");

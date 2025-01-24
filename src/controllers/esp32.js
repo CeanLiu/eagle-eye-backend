@@ -1,6 +1,6 @@
 export function handleImage(clients, image) {
   for (const client of clients) {
-    if (clients.getType() === "user") {
+    if (client.getType() === "user") {
       client.sendMessage(image);
     }
   }

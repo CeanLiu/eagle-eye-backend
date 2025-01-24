@@ -16,6 +16,7 @@ export default function handleConnection(ws) {
 
         if (message.type === "setType") {
           client.setType(message.value); // Update the client type
+          console.log(`client ${ws} joined`);
         } else {
           if (client.getType() === "esp32") {
             esp32Controller.handleMessage(clients, data);
