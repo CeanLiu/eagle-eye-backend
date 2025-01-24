@@ -1,4 +1,4 @@
-import { checkEsp32Status } from "./esp32.js";
+import { checkEsp32Status } from "./esp32-old.js";
 
 //check if esp is available(i.e. if it is on)
 export async function checkEsp32(req, res, next) {
