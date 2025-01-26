@@ -1,6 +1,6 @@
 import Client from "./client.js";
 import * as esp32Controller from "../controllers/esp32.js";
-import userController from "../controllers/user.js";
+import * as userController from "../controllers/user.js";
 const clients = new Set();
 
 export default function handleConnection(ws) {
@@ -16,10 +16,10 @@ export default function handleConnection(ws) {
 
         if (message.type === "setType") {
           client.setType(message.value); // Update the client type
-          console.log(`client ${ws} joined`);
+          console.log(`setType message received`);
         } else {
           if (client.getType() === "esp32") {
-            esp32Controller.handleMessage(clients, data);
+            esp32Controller.handleMessage(clients, message);
           } else {
             userController.handleMessage(client, message);
           }
