@@ -16,7 +16,7 @@ export function handleMessage(clients, message) {
     isLightOn = message.value === "on";
     for (const client of clients) {
       if (client.getType() === "esp32") {
-        client.sendMessage(isLightOn ? "lighton" : "lighoff");
+        client.sendMessage(isLightOn ? "lighton" : "lightoff");
       }
     }
   }
