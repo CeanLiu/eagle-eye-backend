@@ -1,4 +1,10 @@
-import { wasRecording, isRecording, resetIsRecording } from "./user.js";
+import {
+  wasRecording,
+  isRecording,
+  resetIsRecording,
+  capture,
+  resetCapture,
+} from "./user.js";
 import * as fileUtils from "../utils/files.js";
 import path from "path";
 let videoStream;
@@ -9,8 +15,10 @@ export async function handleImage(clients, image) {
     }
   }
 
+  //handle recording(process frames and download to local)
   if (isRecording && !wasRecording) {
-    fileUtils.saveFrame(image);
+    const inputDir = "public/assets/temp";
+    await fileUtils.saveFrame(inputDir, image);
   } else if (!isRecording && wasRecording) {
     resetIsRecording();
     const outputDir = "public/assets/videos";
@@ -19,6 +27,13 @@ export async function handleImage(clients, image) {
     await fileUtils.processVideo(inputDir, outputDir);
     await fileUtils.deleteDir(inputDir);
     await fileUtils.makeDir(inputDir);
+  }
+
+  //capture frame and download to local
+  if (capture) {
+    const outputDir = "public/assets/photos";
+    await fileUtils.saveFrame(outputDir, image);
+    resetCapture();
   }
 }
 
