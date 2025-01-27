@@ -18,8 +18,8 @@ export async function handleImage(clients, image) {
 
   //handle recording(process frames and download to local)
   if (isRecording && !wasRecording) {
-    const inputDir = "public/assets/temp";
-    await fileUtils.saveFrame(inputDir, image);
+    const outputDir = "public/assets/temp";
+    await fileUtils.saveFrame(outputDir, image, false);
   } else if (!isRecording && wasRecording) {
     resetIsRecording();
     const outputDir = "public/assets/videos";
@@ -33,7 +33,7 @@ export async function handleImage(clients, image) {
   //capture frame and download to local
   if (capture) {
     const outputDir = "public/assets/photos";
-    await fileUtils.saveFrame(outputDir, image);
+    await fileUtils.saveFrame(outputDir, image, true);
     resetCapture();
   }
 }

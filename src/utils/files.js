@@ -7,9 +7,9 @@ import path from "path";
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 let frameCounter = 1;
-export async function saveFrame(filePath, imageData) {
+export async function saveFrame(filePath, imageData, isCapture) {
   try {
-    const filename = `frame_${frameCounter}.jpg`;
+    const filename = `frame_${isCapture ? frameCounter : Date.now()}.jpg`;
     const savePath = path.join(process.cwd(), filePath, filename);
     await fs.writeFile(savePath, imageData);
     console.log("Saved image to:", savePath);
