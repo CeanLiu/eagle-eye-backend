@@ -2,7 +2,9 @@ import { processVideo, resetFC } from "../utils/files.js";
 export let isRecording = false;
 export let wasRecording = false;
 export let capture = false;
-export function handleMessage(client, message) {
+export let isLightOn = false;
+
+export function handleMessage(clients, message) {
   if (message.type === "record") {
     wasRecording = isRecording;
     isRecording = message.value === "on";
@@ -10,6 +12,13 @@ export function handleMessage(client, message) {
     capture = true;
     console.log(capture);
     setTimeout(resetCapture, 1000);
+  } else if (message.type === "light") {
+    isLightOn = message.value === "on";
+    for (const client of clients) {
+      if (client.getType() === "esp32") {
+        client.sendMessage(isLightOn ? "lighton" : "lighoff");
+      }
+    }
   }
 }
 export function resetIsRecording() {

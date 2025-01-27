@@ -4,10 +4,11 @@ import {
   resetIsRecording,
   capture,
   resetCapture,
+  isLightOn,
 } from "./user.js";
 import * as fileUtils from "../utils/files.js";
 import path from "path";
-let videoStream;
+
 export async function handleImage(clients, image) {
   for (const client of clients) {
     if (client.getType() === "user") {
@@ -44,3 +45,5 @@ export function handleMessage(clients, message) {
     }
   }
 }
+
+export function sendMessage() {}

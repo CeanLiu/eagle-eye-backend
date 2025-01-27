@@ -6,7 +6,6 @@ const clients = new Set();
 export default function handleConnection(ws) {
   const client = new Client(ws);
   clients.add(client);
-
   ws.on("message", (data, isBinary) => {
     try {
       if (isBinary) {
@@ -21,7 +20,7 @@ export default function handleConnection(ws) {
           if (client.getType() === "esp32") {
             esp32Controller.handleMessage(clients, message);
           } else {
-            userController.handleMessage(client, message);
+            userController.handleMessage(clients, message);
           }
         }
       }
