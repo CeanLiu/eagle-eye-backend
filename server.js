@@ -25,12 +25,13 @@ server.listen(process.env.PORT, process.env.PUBLIC_IP, () => {
   );
 });
 
-app.use("/videos", videosRouter);
-app.use("/uploads", uploadRouter);
-
 app.get("/", (req, res) => {
   res.send("hello world");
 });
+
+app.use("/videos", videosRouter);
+
+app.use("/uploads", uploadRouter);
 
 app.use("/savedContent", savedRouter);
 // Example route for handling GET requests

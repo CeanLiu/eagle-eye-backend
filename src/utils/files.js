@@ -50,6 +50,15 @@ export async function processVideo(inputDir, outputDir) {
   });
 }
 
+export async function getFiles(dir) {
+  try {
+    const files = await fs.readdir(dir); // This already returns a promise
+    return files;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function deleteDir(dir) {
   rmSync(dir, { recursive: true, force: true });
 }
