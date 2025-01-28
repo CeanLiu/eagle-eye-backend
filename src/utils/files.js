@@ -1,3 +1,4 @@
+import "dotenv/config";
 import * as fs from "fs/promises";
 import { rmSync, mkdirSync } from "fs";
 import ffmpeg from "fluent-ffmpeg";
