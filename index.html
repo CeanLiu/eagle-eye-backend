@@ -55,7 +55,7 @@
                 formData.append(myFiles.item(key).name, myFiles.item(key))
             })
             try{
-            const response = await fetch('http://localhost:5000/uploads/uploads', {
+            const response = await fetch('http://localhost:80/uploads/uploads', {
                 method: 'POST',
                 body: formData
             })

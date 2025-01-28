@@ -45,6 +45,14 @@ export function fileExtLimiter(allowedExtArray) {
   };
 }
 
+//ensure a file is submitted
+export function filesExists(req, res, next) {
+  if (!req.files)
+    return res.status(400).json({ status: "error", message: "Missing Files" });
+
+  next();
+}
+
 //keep errorHandler last in middleware.js
 //this is a customizeable erorr handler function
 export function errorHandler(err, req, res, next) {
@@ -58,12 +66,4 @@ export function errorHandler(err, req, res, next) {
   };
   console.error("Error: ", responseBody);
   res.json(responseBody);
-}
-
-//ensure a file is submitted
-export function filesExists(req, res, next) {
-  if (!req.files)
-    return res.status(400).json({ status: "error", message: "Missing Files" });
-
-  next();
 }

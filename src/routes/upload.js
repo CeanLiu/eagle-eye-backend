@@ -1,4 +1,5 @@
 import express from "express";
+import "dotenv/config";
 import fileUpload from "express-fileupload";
 import { stat } from "fs";
 import path from "path";
@@ -36,7 +37,10 @@ router.post(
     console.log(files);
 
     Object.keys(files).forEach((key) => {
-      const filepath = path.join(__dirname, "../../videos", files[key].name);
+      const filepath = path.join(
+        process.env.VIDEO_STORAGE_PATH,
+        files[key].name
+      );
       files[key].mv(filepath, (err) => {
         if (err) return res.status(500).json({ status: "error", message: err });
       });

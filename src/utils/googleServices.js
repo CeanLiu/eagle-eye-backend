@@ -1,7 +1,7 @@
 import { google } from "googleapis";
 import "dotenv/config";
 import mime from "mime-types";
-import * as fs from "fs/promises";
+import * as fs from "fs";
 const oauth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
   process.env.CLIENT_SECRET,
