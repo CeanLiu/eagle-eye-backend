@@ -3,6 +3,7 @@ import express from "express";
 import setupWebSocket from "./src/ws/setupWebSocket.js";
 import { createServer } from "http";
 import { errorHandler } from "./src/utils/middleware.js";
+import savedRouter from "./src/routes/savedContent.js";
 import cors from "cors";
 import uploadRouter from "./src/routes/upload.js";
 import path from "path";
@@ -79,6 +80,7 @@ server.listen(process.env.PORT, process.env.PUBLIC_IP, () => {
   );
 });
 
+app.use("/savedContent", savedRouter);
 // Example route for handling GET requests
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Express server!" });
