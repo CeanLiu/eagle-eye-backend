@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        video { display: block; margin: 10px 0; width: 100%; max-width: 600px; }
+    </style>
+</head>
+<body>
+    <h1>File Uploader</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="myFiles" accept="video/*" multiple />
+        <button>Submit</button>
+    </form>
+    <h2></h2>
+    <h3></h3>
+    <h2>Uploaded Videos</h2>
+    <div id="videoList"></div>
+    <script>
+        const form = document.getElementById('uploadForm')
+        const video = document.getElementById('videoList');
+
+        const fetchVideos = async () => {
+            try {
+                const response = await fetch('/videos'); // Assuming `/videos` serves static files
+                const text = await response.text();
+                const parser = new DOMParser();
+                const html = parser.parseFromString(text, 'text/html');
+                const links = html.querySelectorAll('a');
+
+                videoList.innerHTML = '';
+                links.forEach(link => {
+                    if (link.href.endsWith('/')) return; // Skip directories
+                    const videoUrl = link.href;
+                    const videoElement = document.createElement('video');
+                    videoElement.src = videoUrl;
+                    videoElement.controls = true;
+                    videoList.appendChild(videoElement);
+                });
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+            }
+        };
+
+        const sendFiles = async () => {
+            //object
+            const myFiles = document.getElementById('myFiles').files
+            // console.log(myFiles)
+            const formData = new FormData()
+
+            Object.keys(myFiles).forEach(key => {
+                formData.append(myFiles.item(key).name, myFiles.item(key))
+            })
+            try{
+            const response = await fetch('http://localhost:5000/uploads/uploads', {
+                method: 'POST',
+                body: formData
+            })
+            //womp womp
+
+            const json = await response.json()
+
+            const h2 = document.querySelector('h2')
+            h2.textContent = `Status: ${json?.status}`
+
+            const h3 = document.querySelector('h3')
+            h3.textContent = json?.message
+
+            console.log(json)
+            fetchVideos()
+        }
+        catch (error){
+            console.error('error uploading files: ', error)
+        }
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            sendFiles()
+        })
+
+        fetchVideos()
+    </script>
+</body>
+</html>

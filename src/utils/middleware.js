@@ -1,4 +1,5 @@
 import { checkEsp32Status } from "./esp32-old.js";
+import path from "path";
 
 //check if esp is available(i.e. if it is on)
 export async function checkEsp32(req, res, next) {
@@ -29,4 +30,40 @@ export function errorHandler(err, req, res, next) {
   };
   console.error("Error: ", responseBody);
   res.json(responseBody);
+}
+
+//ensure a file is submitted
+export function filesExists(req, res, next) {
+  if (!req.files)
+    return res.status(400).json({ status: "error", message: "Missing Files" });
+
+  next();
+}
+
+//limit extension type
+export function fileExtLimiter(allowedExtArray) {
+  return (req, res, next) => {
+    const files = req.files;
+
+    const fileExtensions = [];
+    Object.keys(files).forEach((key) => {
+      fileExtensions.push(path.extname(files[key].name));
+    });
+
+    // are the files allowed?
+    const allowed = fileExtensions.every((ext) =>
+      allowedExtArray.includes(ext)
+    );
+
+    if (!allowed) {
+      const message =
+        `Upload failed. Only ${allowedExtArray.toString()} files allowed.`.replaceAll(
+          ",",
+          ", "
+        );
+
+      return res.status(422).json({ status: "error", message });
+    }
+    next();
+  };
 }
