@@ -17,29 +17,6 @@ export async function checkEsp32(req, res, next) {
   }
 }
 
-//keep errorHandler last in middleware.js
-//this is a customizeable erorr handler function
-export function errorHandler(err, req, res, next) {
-  const statusCode = err.statusCode || 500;
-  res.status(statusCode);
-
-  const responseBody = {
-    status: err.statusCode,
-    message: err.message,
-    stack: process.env.NODE_ENV === "production" ? "💥" : err.stack,
-  };
-  console.error("Error: ", responseBody);
-  res.json(responseBody);
-}
-
-//ensure a file is submitted
-export function filesExists(req, res, next) {
-  if (!req.files)
-    return res.status(400).json({ status: "error", message: "Missing Files" });
-
-  next();
-}
-
 //limit extension type
 export function fileExtLimiter(allowedExtArray) {
   return (req, res, next) => {
@@ -66,4 +43,27 @@ export function fileExtLimiter(allowedExtArray) {
     }
     next();
   };
+}
+
+//keep errorHandler last in middleware.js
+//this is a customizeable erorr handler function
+export function errorHandler(err, req, res, next) {
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode);
+
+  const responseBody = {
+    status: err.statusCode,
+    message: err.message,
+    stack: process.env.NODE_ENV === "production" ? "💥" : err.stack,
+  };
+  console.error("Error: ", responseBody);
+  res.json(responseBody);
+}
+
+//ensure a file is submitted
+export function filesExists(req, res, next) {
+  if (!req.files)
+    return res.status(400).json({ status: "error", message: "Missing Files" });
+
+  next();
 }
