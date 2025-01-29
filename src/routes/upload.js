@@ -31,6 +31,8 @@ router.post(
     ".mts",
     ".m2ts",
     ".webm",
+    ".png",
+    ".jpg",
   ]),
   (req, res) => {
     const files = req.files;
@@ -38,7 +40,9 @@ router.post(
 
     Object.keys(files).forEach((key) => {
       const filepath = path.join(
-        process.env.VIDEO_STORAGE_PATH,
+        path.extname(key) === ".png" || path.extname(key) === ".jpg"
+          ? process.env.CAPTURE_STORAGE_PATH
+          : process.env.VIDEO_STORAGE_PATH,
         files[key].name
       );
       files[key].mv(filepath, (err) => {
